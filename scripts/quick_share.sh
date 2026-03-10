@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# quick_share.sh — fast-path: add one event, compile, and push immediately.
-# Skips mirror sync. Use when cross-agent propagation is time-sensitive.
+# Quick-share: add one event, compile, and push immediately.
+# Use when a fact must reach other agents now, not at the next compile cycle.
 #
 # Usage:
 #   bash scripts/quick_share.sh \
-#     --source windows-codex --kind decision --scope stable \
-#     --summary "We decided X" [--project NAME] [--importance 0.8] \
-#     [--supersedes EVENT_ID ...]
+#     --source YOUR_SOURCE_ID --kind decision --scope stable \
+#     --summary "We decided X" [--project NAME] [--importance 0.8]
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -14,29 +13,26 @@ cd "$ROOT"
 
 if command -v python3 &>/dev/null; then PYTHON=python3; else PYTHON=python; fi
 
-# 1) validate & append event
+# 1) Validate and append the event
 "$PYTHON" scripts/add_event.py "$@"
 
-# 2) pull latest to minimise conflicts
+# 2) Pull latest to minimise conflicts
 git fetch origin main
 git merge --ff-only origin/main
 
-# 3) compile canonical
+# 3) Compile canonical
 "$PYTHON" scripts/compile_memory_hub.py --apply
 
-# 4) distribute fresh canonical to local allowed participants
-bash scripts/sync_cloud_to_workspace.sh
-
-# 5) stage and guard
+# 4) Stage and guard
 git add canonical sources
 if git diff --cached --quiet; then
   echo "NO_CHANGES"
   exit 0
 fi
 
-git commit -m "chore(memory-hub): quick-share event"
+git commit -m "chore(memory): quick-share event"
 
-# 6) push with retry
+# 5) Push with retry
 for attempt in 1 2 3; do
   if git push origin main; then
     echo "QUICK_SHARE_DONE"
@@ -46,10 +42,9 @@ for attempt in 1 2 3; do
   git fetch origin main
   git rebase origin/main
   "$PYTHON" scripts/compile_memory_hub.py --apply
-  bash scripts/sync_cloud_to_workspace.sh
   git add canonical sources
   if ! git diff --cached --quiet; then
-    git commit -m "chore(memory-hub): recompile after rebase"
+    git commit -m "chore(memory): recompile after rebase"
   fi
 done
 

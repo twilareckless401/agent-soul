@@ -4,15 +4,14 @@ import hashlib
 import re
 
 
-TZ = datetime.timezone(datetime.timedelta(hours=8))
-
-
 def now_iso():
-    return datetime.datetime.now(TZ).isoformat(timespec="seconds")
+    """Return current local time as ISO-8601 string with timezone offset."""
+    return datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(timespec="seconds")
 
 
 def day_str():
-    return datetime.datetime.now(TZ).strftime("%Y-%m-%d")
+    """Return today's date string in local timezone."""
+    return datetime.datetime.now(datetime.timezone.utc).astimezone().strftime("%Y-%m-%d")
 
 
 def normalize_summary(summary):

@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           # GITHUB_TOKEN pushes do NOT trigger downstream workflows
           # (GitHub's anti-recursion policy).  This is intentional here

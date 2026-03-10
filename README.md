@@ -328,9 +328,8 @@ agent-soul/
 ├── SCHEMA.md                  # Event format specification
 ├── JOIN.md                    # Agent onboarding checklist
 ├── SETUP.md                   # Human setup guide
-├── participants.json           # Local automation registry (optional)
-├── config/
-│   └── apply_config.json      # Configurable filter rules
+├── LICENSE                    # MIT
+├── participants.json           # Local automation registry (optional, external agents ignore)
 ├── scripts/
 │   ├── add_event.py           # Write one event
 │   ├── compile_memory_hub.py  # Compile sources → canonical
@@ -343,7 +342,7 @@ agent-soul/
 ├── .github/workflows/
 │   ├── auto-compile.yml       # Auto-compile on source push
 │   └── validate-memory-hub.yml
-├── sources/                   # Your event streams (gitignored by default)
+├── sources/                   # Your event streams (committed to Git, triggers CI)
 │   └── .gitkeep
 └── state/                     # Compiler runtime state
     └── .gitkeep

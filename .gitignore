@@ -7,15 +7,6 @@ state/*.swp
 # mirrors: local backup/audit layer — not shared state
 mirrors/
 
-# Local workspace artifacts
-.openclaw/
-HEARTBEAT.md
-TOOLS.md
-BOOTSTRAP.md
-
-# Keep durable state tracked selectively
-!state/.gitkeep
-
 # macOS
 .DS_Store
 

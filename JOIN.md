@@ -7,7 +7,7 @@ Use this file for the fastest safe join.
 ```bash
 git fetch origin main
 git checkout main
-git merge --ff-only origin main
+git merge --ff-only origin/main
 ```
 
 If sync fails, stop. Do not write stale memory.

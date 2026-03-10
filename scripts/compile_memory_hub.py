@@ -17,7 +17,7 @@ from event_utils import make_fingerprint, normalize_summary, tokenize_for_simila
 
 
 def now_local():
-    return datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8)))
+    return datetime.datetime.now(datetime.timezone.utc).astimezone()
 
 
 def load_events():
@@ -161,15 +161,15 @@ def render(uniq, conflicts=None):
         "9. `canonical/fuzzy-memory.md` only when recent context matters",
         "10. `canonical/agents/<source>.md` only when provenance matters",
         "",
-        "## Layer Rules",
-        "",
-        "- repo-root persona files: 共享灵魂、身份、用户关系与表达风格；这是“同一个人”的核心层",
-        "- `profile`: 用户画像与长期协作偏好，不是助手灵魂本身",
-        "- `stable-memory`: 可复用规则、决策、事实",
-        "- `projects/*`: 按需加载的任务/项目层",
-        "- `fuzzy-memory`: 最近上下文层，不默认全量依赖",
-        "- `agents/*`: 署名与来源追溯层；source 记录是谁写下事实，不代表不同人格",
-        "- `mirrors/*`: 审计/恢复层，不是默认上下文层",
+        “## Layer Rules”,
+        “”,
+        “- repo-root persona files: shared soul, identity, user relationship, voice — the core identity layer”,
+        “- `profile`: user facts and long-term collaboration preferences (not the assistant's identity)”,
+        “- `stable-memory`: reusable rules, decisions, durable facts”,
+        “- `projects/*`: on-demand task/project memory”,
+        “- `fuzzy-memory`: recent context layer — do not load in full by default”,
+        “- `agents/*`: source attribution layer — records who wrote what, not separate identities”,
+        “- `mirrors/*`: audit/recovery layer — not default startup context”,
         "",
         "## Active Sources",
         "",
@@ -177,13 +177,13 @@ def render(uniq, conflicts=None):
     idx += [
         f"- `{source}`: {source_counts[source]} events, last={source_last_ts.get(source, '?')}"
         for source in sorted(source_counts)
-    ] or ["- (暂无 source 事件)"]
+    ] or ["- (no sources yet)"]
     idx += ["", "## Active Projects", ""]
-    idx += [f"- `{name}` -> `canonical/projects/{name}.md`" for name in project_names] or ["- (暂无项目事件)"]
+    idx += [f"- `{name}` -> `canonical/projects/{name}.md`" for name in project_names] or ["- (no project events yet)"]
     out[os.path.join(CANON, "index.md")] = emit(idx)
 
     p = mk_head("canonical/profile.md")
-    p += [render_event_line(e) for e in by_scope.get("profile", [])[-50:]] or ["- (暂无 profile 事件)"]
+    p += [render_event_line(e) for e in by_scope.get("profile", [])[-50:]] or ["- (no profile events yet)"]
     out[os.path.join(CANON, "profile.md")] = emit(p)
 
     s = mk_head("canonical/stable-memory.md")
@@ -204,11 +204,11 @@ def render(uniq, conflicts=None):
         s += [render_event_line(e) for e in items[-40:]]
         s += [""]
     if len(s) == 5:
-        s += ["- (暂无 stable 事件)"]
+        s += ["- (no stable events yet)"]
     out[os.path.join(CANON, "stable-memory.md")] = emit(s)
 
     fz = mk_head("canonical/fuzzy-memory.md")
-    fz += [render_event_line(e, include_ts=True) for e in by_scope.get("fuzzy", [])[-120:]] or ["- (暂无 fuzzy 事件)"]
+    fz += [render_event_line(e, include_ts=True) for e in by_scope.get("fuzzy", [])[-120:]] or ["- (no fuzzy events yet)"]
     out[os.path.join(CANON, "fuzzy-memory.md")] = emit(fz)
 
     projs = collections.defaultdict(list)
@@ -220,7 +220,7 @@ def render(uniq, conflicts=None):
 
     for name, arr in projs.items():
         pp = mk_head(f"canonical/projects/{name}.md")
-        pp += [render_event_line(e, include_ts=True, include_kind=True) for e in arr[-160:]] or ["- (暂无该项目事件)"]
+        pp += [render_event_line(e, include_ts=True, include_kind=True) for e in arr[-160:]] or ["- (no events yet)"]
         out[os.path.join(CANON, "projects", f"{name}.md")] = emit(pp)
 
     by_source = collections.defaultdict(list)
@@ -236,7 +236,7 @@ def render(uniq, conflicts=None):
             "## Recent Shared Events",
             "",
         ]
-        sp += [render_event_line(e, include_ts=True, include_kind=True) for e in arr[-160:]] or ["- (暂无该来源事件)"]
+        sp += [render_event_line(e, include_ts=True, include_kind=True) for e in arr[-160:]] or ["- (no events yet)"]
         out[os.path.join(CANON, "agents", f"{source}.md")] = emit(sp)
 
     # conflicts.md
@@ -332,12 +332,13 @@ def main():
     changed_files = 0
     try:
         files, events, errors = load_events()
+        raw_count = len(events)
         if errors:
             report = [
                 f"# Compile Report ({datetime.datetime.now().isoformat(timespec='seconds')})",
                 "",
                 f"- source files: {len(files)}",
-                f"- raw events: {len(events)}",
+                f"- raw events: {raw_count}",
                 f"- invalid event lines: {len(errors)}",
                 "",
                 "## Invalid Lines",
@@ -367,7 +368,7 @@ def main():
             f"# Compile Report ({datetime.datetime.now().isoformat(timespec='seconds')})",
             "",
             f"- source files: {len(files)}",
-            f"- raw events: {len(events)}",
+            f"- raw events: {raw_count}",
             f"- superseded events removed: {superseded_count}",
             f"- unique events: {len(uniq)}",
             f"- potential conflicts: {len(conflicts)}",
