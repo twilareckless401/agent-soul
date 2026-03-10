@@ -78,9 +78,12 @@ When new information replaces old, write a new event with `supersedes`:
 {
   "event_id": "new-uuid",
   "source": "windows-claude",
+  "ts": "2026-01-02T10:00:00+00:00",
   "kind": "preference",
   "scope": "profile",
   "summary": "User prefers light mode.",
+  "importance": 0.8,
+  "fingerprint": "sha256:...",
   "supersedes": ["old-event-id-1"]
 }
 ```

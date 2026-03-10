@@ -36,4 +36,6 @@ jobs:
         run: python scripts/compile_memory_hub.py --apply
 
       - name: Fail on uncommitted canonical drift
-        run: git diff --exit-code -- canonical
+        run: |
+          git add canonical/
+          git diff --cached --exit-code -- canonical

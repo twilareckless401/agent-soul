@@ -18,7 +18,7 @@ if command -v python3 &>/dev/null; then PYTHON=python3; else PYTHON=python; fi
 
 # 2) Pull latest to minimise conflicts
 git fetch origin main
-git merge --ff-only origin/main
+git merge --ff-only origin/main || { echo "ERROR: local main has diverged from origin/main. Run: git rebase origin/main" >&2; exit 1; }
 
 # 3) Compile canonical
 "$PYTHON" scripts/compile_memory_hub.py --apply

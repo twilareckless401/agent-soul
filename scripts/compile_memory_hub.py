@@ -335,7 +335,7 @@ def main():
         raw_count = len(events)
         if errors:
             report = [
-                f"# Compile Report ({datetime.datetime.now().isoformat(timespec='seconds')})",
+                f"# Compile Report ({now_local().isoformat(timespec='seconds')})",
                 "",
                 f"- source files: {len(files)}",
                 f"- raw events: {raw_count}",
@@ -365,7 +365,7 @@ def main():
         cleanup_legacy_runtime_files()
 
         report = [
-            f"# Compile Report ({datetime.datetime.now().isoformat(timespec='seconds')})",
+            f"# Compile Report ({now_local().isoformat(timespec='seconds')})",
             "",
             f"- source files: {len(files)}",
             f"- raw events: {raw_count}",

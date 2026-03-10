@@ -16,7 +16,7 @@ import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCES = os.path.join(ROOT, "sources")
-TZ = datetime.timezone(datetime.timedelta(hours=8))
+TZ = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
 
 def main():
